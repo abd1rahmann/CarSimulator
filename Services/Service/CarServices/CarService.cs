@@ -9,6 +9,13 @@ namespace Services.Service.CarServices
 {
     public class CarService : ICarService
     {
+        private readonly IDriverService _driverService;
+
+        public CarService(IDriverService driverService)
+        {
+            _driverService = driverService;
+        }
+
         public void TurnLeft(Car car, Driver driver)
         {
             car.Direction = car.Direction switch
@@ -19,7 +26,17 @@ namespace Services.Service.CarServices
                 Direction.East => Direction.North,
                 _ => car.Direction
             };
-            driver.Tiredness++;
+            if (car.Fuel > 0)
+            {
+                car.Fuel--;
+
+                _driverService.SetRest(driver);
+            }
+            else
+            {
+                Console.WriteLine("Bensinen är slut. Du måste tanka bilen innan du kan köra vidare!");
+            }
+
         }
 
         public void TurnRight(Car car, Driver driver)
@@ -33,6 +50,15 @@ namespace Services.Service.CarServices
                 _ => car.Direction
             };
             driver.Tiredness++;
+            if (car.Fuel > 0)
+            {
+                car.Fuel--;
+                _driverService.SetRest(driver);
+            }
+            else
+            {
+                Console.WriteLine("Bensinen är slut. Du måste tanka bilen innan du kan köra vidare!");
+            }
         }
 
         public void DriveForward(Car car, Driver driver)
@@ -40,7 +66,7 @@ namespace Services.Service.CarServices
             if (car.Fuel > 0)
             {
                 car.Fuel--;
-                driver.Tiredness++;
+                _driverService.SetRest(driver);
             }
             else
             {
@@ -53,19 +79,25 @@ namespace Services.Service.CarServices
             if (car.Fuel > 0)
             {
                 car.Fuel--;
-                driver.Tiredness++;
+                _driverService.SetRest(driver);
             }
             else
             {
                 Console.WriteLine("Bensinen är slut. Du måste tanka bilen innan du kan köra vidare!");
             }
+
         }
 
         public void Refuel(Car car, Driver driver)
         {
             car.Fuel = Car.MaxFuel;
-            driver.Tiredness += 2;
         }
+
+        public void AddTiredness(Driver driver)
+        {
+            driver.Tiredness += 9;
+        }
+
     }
 
 }

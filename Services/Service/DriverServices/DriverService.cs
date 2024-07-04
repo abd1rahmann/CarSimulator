@@ -5,20 +5,42 @@ namespace Services.Service.DriverServices
 {
     public class DriverService : IDriverService
     {
-        public void Rest(Driver driver)
+
+        public int SetRest(Driver driver)
         {
-            driver.Tiredness = Math.Max(0, driver.Tiredness - 2);
+            if (driver.Tired)
+            {
+
+                //Console.Clear();
+                string redo = "";
+
+                while (redo.ToLower() != "j")
+                {
+                    Console.WriteLine("\nFöraren måste vila. Tryck på (J) för att fortsätta köra");
+                    redo = Console.ReadLine().ToLower();
+                }
+
+
+
+                driver.Tiredness = 0;
+                driver.Tired = false;
+            }
+
+            driver.Tiredness++;
+
+            return driver.Tiredness;
         }
 
         public void CheckFatigue(Driver driver)
         {
-            if (driver.Tiredness >= Driver.MaxTiredness)
+            if (Driver.MaxTiredness <=  driver.Tiredness)
             {
-                Console.WriteLine("Föraren är extremt trött. Det är farligt att köra. Ta en lång rast!");
+                Console.WriteLine("\nFöraren är extremt trött. Det är farligt att köra. Ta en lång rast!\n");
+                driver.Tired = true;
             }
-            else if (driver.Tiredness >= Driver.WarningTiredness)
+            else if (driver.Tiredness == Driver.WarningTiredness)
             {
-                Console.WriteLine("Föraren är väldigt trött. Det är dags för en rast!");
+                Console.WriteLine("\nFöraren är väldigt trött. Det är dags för en rast!\n");
             }
         }
     }

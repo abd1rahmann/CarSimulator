@@ -5,16 +5,16 @@ using Services.Service.DriverServices;
 
 namespace Bilsimulator
 {
-    internal class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             IDriverService driverService = new DriverService();
-            ICarService carService = new CarService();
+            ICarService carService = new CarService(driverService);
 
             Menu menu = new Menu(driverService, carService);
 
-            menu.Start();
+            await menu.Start();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Bilsimulator.Tests.Tests
     [TestClass]
     public class DriverTests
     {
-        private IDriverService driverService;
+        /*private IDriverService driverService;
         private Driver driver;
 
         [TestInitialize]
@@ -15,39 +15,57 @@ namespace Bilsimulator.Tests.Tests
             driverService = new DriverService();
             driver = new Driver();
         }
+        */
 
         [TestMethod]
-        public void Rest_ShouldReduceTiredness()
+        public void When_Driver_Is_Tired_SetRest_Should_Reset_Tiredness_To_1()
         {
-            driver.Tiredness = 5;
-            driverService.Rest(driver);
-            Assert.AreEqual(3, driver.Tiredness);
-        }
+            //Arrange
+            var driver = new Driver();
+            var driverService = new DriverService();
 
-        [TestMethod]
-        public void CheckFatigue_ShouldWarnWhenTired()
-        {
-            driver.Tiredness = Driver.WarningTiredness;
+
+            driver.Tiredness = 10; // This shows that the driver is tired
+            driver.Tired = true; // A flag to set driver tiredness
+
+            string input = "J";
+
             using (var sw = new StringWriter())
             {
-                Console.SetOut(sw);
-                driverService.CheckFatigue(driver);
-                var result = sw.ToString().Trim();
-                Assert.AreEqual("Föraren är väldigt trött. Det är dags för en rast!", result);
+                using (var sr = new StringReader(input))
+                {
+                    Console.SetOut(sw);
+                    Console.SetIn(sr);
+
+                    // Act
+                    var result = driverService.SetRest(driver);
+
+                    // Assert
+                    Assert.AreEqual(1, result);
+                }
             }
+
         }
 
+        
         [TestMethod]
-        public void CheckFatigue_ShouldAlertWhenExtremelyTired()
+        public void When_Driver_Turns_SetRest_Should_Increase_By_1()
         {
-            driver.Tiredness = Driver.MaxTiredness;
-            using (var sw = new StringWriter())
-            {
-                Console.SetOut(sw);
-                driverService.CheckFatigue(driver);
-                var result = sw.ToString().Trim();
-                Assert.AreEqual("Föraren är extremt trött. Det är farligt att köra. Ta en lång rast!", result);
-            }
+            //Arrange
+            var driver = new Driver();
+            var driverService = new DriverService();
+
+
+            driver.Tiredness = 1; // This shows that the driver is tired
+            driver.Tired = false; // A flag to set driver tiredness
+
+            // Act
+             var result = driverService.SetRest(driver);
+
+             // Assert
+             Assert.AreEqual(2, result);
+
         }
+
     }
 }

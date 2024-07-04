@@ -1,5 +1,8 @@
 ﻿using Services.Service.CarServices;
 using Services.Service.DriverServices;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
+using System.Net.Http;
+using System.Text.Json;
 
 namespace Bilsimulator
 {
@@ -18,11 +21,33 @@ namespace Bilsimulator
             driver = new Driver();
         }
 
-        public void Start()
+        public async Task Start()
         {
+
+            var apiUrl = "https://randomuser.me/api/"; // Replace with the actual API URL
+
+            try
+            {
+                var userResponse = await GetUser(apiUrl);
+                if (userResponse != null && userResponse.Results.Length > 0)
+                {
+                    var user = userResponse.Results[0];
+                    var name = $"{user.Name.First} {user.Name.Last}";
+                    driver.Name = name;
+                }
+                else
+                {
+                    Console.WriteLine("Could not fetch data from Api. User data is null.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+
             while (true)
             {
-                Console.Clear();
+                
                 Console.WriteLine("Tillgängliga kommandon:");
                 Console.WriteLine("1. Sväng vänster");
                 Console.WriteLine("2. Sväng höger");
@@ -31,6 +56,7 @@ namespace Bilsimulator
                 Console.WriteLine("5. Rasta");
                 Console.WriteLine("6. Tanka bilen");
                 Console.WriteLine("7. Avsluta");
+                Console.WriteLine("8. Lägg till tiredness");
                 Console.Write("Vad vill du göra härnäst? (ange siffra): ");
                 string command = Console.ReadLine();
 
@@ -49,13 +75,16 @@ namespace Bilsimulator
                         carService.DriveBackward(car, driver);
                         break;
                     case "5":
-                        driverService.Rest(driver);
+                        driverService.SetRest(driver);
                         break;
                     case "6":
                         carService.Refuel(car, driver);
                         break;
                     case "7":
                         return;
+                    case "8":
+                        carService.AddTiredness(driver);
+                        break;
                     default:
                         Console.WriteLine("Ogiltigt kommando. Försök igen.");
                         break;
@@ -63,6 +92,7 @@ namespace Bilsimulator
 
                 driverService.CheckFatigue(driver);
 
+                Console.WriteLine($"\nFörare: {driver.Name}\n");
                 Console.WriteLine($"Bilens riktning: {car.Direction}");
                 Console.WriteLine($"Bensin: {car.Fuel}/{Car.MaxFuel}");
                 Console.WriteLine($"Förarens trötthet: {driver.Tiredness}/{Driver.MaxTiredness}");
@@ -70,5 +100,22 @@ namespace Bilsimulator
                 Console.ReadKey();
             }
         }
+
+        public static async Task<UserResponse> GetUser(string apiUrl)
+        {
+            using var client = new HttpClient();
+            var response = await client.GetStringAsync(apiUrl);
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true
+            };
+
+            var userResponse = JsonSerializer.Deserialize<UserResponse>(response, options);
+
+            return userResponse;
+        }
+
     }
 }
