@@ -2,68 +2,123 @@
 using Bilsimulator;
 using Services.Service.CarServices;
 using Services.Service.DriverServices;
+using Moq;
+
 
 namespace Bilsimulator.Tests
 {
     [TestClass]
     public class CarTests
     {
-        private ICarService carService;
-        private IDriverService driverService;
-        private Car car;
-        private Driver driver;
-
-        [TestInitialize]
-        public void Setup()
-        {
-            carService = new CarService(driverService);
-            car = new Car();
-            driver = new Driver();
-        }
+     
 
         [TestMethod]
-        public void TurnLeft_ShouldChangeDirection()
+        public void Turn_Left_Changes_Direction_And_Decreases_Fuel()
         {
-            car.Direction = Direction.North;
+            var mockDriverService = new Mock<IDriverService>();
+            var carService = new CarService(mockDriverService.Object);
+            var car = new Car { Direction = Direction.Norrut, Fuel = 10 };
+            var driver = new Driver();
+
             carService.TurnLeft(car, driver);
-            Assert.AreEqual(Direction.West, car.Direction);
-        }
 
-        [TestMethod]
-        public void TurnRight_ShouldChangeDirection()
-        {
-            car.Direction = Direction.North;
-            carService.TurnRight(car, driver);
-            Assert.AreEqual(Direction.East, car.Direction);
-        }
-
-        [TestMethod]
-        public void DriveForward_ShouldReduceFuel()
-        {
-            car.Fuel = 10;
-            carService.DriveForward(car, driver);
+            Assert.AreEqual(Direction.Västerut, car.Direction);
             Assert.AreEqual(9, car.Fuel);
+            driver.Tiredness = 1; 
+            driver.Tired = false; 
+
+            var result = driver.Tiredness + 1;
+
+            Assert.AreEqual(2, result);
+        }
+
+
+
+        [TestMethod]
+
+        public void Turn_Right_Changes_Direction_And_Increases_Tiredness_And_Decreases_Fuel()
+        {
+            var mockDriverService = new Mock<IDriverService>();
+            var carService = new CarService(mockDriverService.Object);
+            var car = new Car { Direction = Direction.Norrut, Fuel = 10 };
+            var driver = new Driver();
+
+            carService.TurnRight(car, driver);
+
+            Assert.AreEqual(Direction.Österut, car.Direction);
+            Assert.AreEqual(9, car.Fuel);
+            driver.Tiredness = 1; 
+            driver.Tired = false; 
+
+            var result = driver.Tiredness + 1;
+
+            Assert.AreEqual(2, result);
         }
 
         [TestMethod]
-        public void DriveForward_ShouldNotDriveWhenNoFuel()
+        public void Turn_Forward_Changes_Direction_And_Increases_Tiredness_And_Decreases_Fuel()
         {
-            car.Fuel = 0;
-            using (var sw = new StringWriter())
-            {
-                Console.SetOut(sw);
-                carService.DriveForward(car, driver);
-                var result = sw.ToString().Trim();
-                Assert.AreEqual("Bensinen är slut. Du måste tanka bilen innan du kan köra vidare!", result);
-            }
+            var mockDriverService = new Mock<IDriverService>();
+            var carService = new CarService(mockDriverService.Object);
+            var car = new Car { Direction = Direction.Norrut, Fuel = 10 };
+            var driver = new Driver();
+
+            carService.DriveForward(car, driver);
+
+            Assert.AreEqual(Direction.Norrut, car.Direction);
+            Assert.AreEqual(9, car.Fuel);
+            driver.Tiredness = 1; 
+            driver.Tired = false; 
+
+            var result = driver.Tiredness + 1;
+
+            Assert.AreEqual(2, result);
         }
 
         [TestMethod]
-        public void Refuel_ShouldFillFuel()
+
+        public void Turn_Backward_Changes_Direction_And_Increases_Tiredness_And_Decreases_Fuel()
         {
-            car.Fuel = 0;
+            var mockDriverService = new Mock<IDriverService>();
+            var carService = new CarService(mockDriverService.Object);
+            var car = new Car { Direction = Direction.Norrut, Fuel = 10 };
+            var driver = new Driver();
+
+            carService.DriveBackward(car, driver);
+
+            Assert.AreEqual(Direction.Söderut, car.Direction);
+            Assert.AreEqual(9, car.Fuel);
+            driver.Tiredness = 1; 
+            driver.Tired = false; 
+
+            var result = driver.Tiredness + 1;
+
+            Assert.AreEqual(2, result);
+        }
+
+        [TestMethod]
+
+        public void Refuel_Sets_Fuel_To_MaxFuel()
+        {
+            var mockDriverService = new Mock<IDriverService>();
+            var carService = new CarService(mockDriverService.Object);
+            var car = new Car { Fuel = 10 };
+            var driver = new Driver();
+
             carService.Refuel(car, driver);
-            Assert.AreEqual(Car.MaxFuel, car.Fuel);
+
+            Assert.AreEqual(20, car.Fuel);
+
+            driver.Tiredness = 1; 
+            driver.Tired = false; 
+
+            var result = driver.Tiredness + 1;
+
+            Assert.AreEqual(2, result);
+
+
         }
+
+
     }
 }

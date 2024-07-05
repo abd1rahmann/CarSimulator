@@ -3,6 +3,7 @@ using Services.Service.DriverServices;
 using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 using System.Net.Http;
 using System.Text.Json;
+using Services.Service.ConsoleService;
 
 namespace Bilsimulator
 {
@@ -12,6 +13,8 @@ namespace Bilsimulator
         private readonly ICarService carService;
         private readonly Driver driver;
         private readonly Car car;
+        private readonly IConsole console;
+
 
         public Menu(IDriverService driverService, ICarService carService)
         {
@@ -19,6 +22,8 @@ namespace Bilsimulator
             this.carService = carService;
             car = new Car();
             driver = new Driver();
+            console = new ConsoleWrapper();
+            
         }
 
         public async Task Start()
@@ -47,17 +52,19 @@ namespace Bilsimulator
 
             while (true)
             {
-                
-                Console.WriteLine("Tillgängliga kommandon:");
-                Console.WriteLine("1. Sväng vänster");
-                Console.WriteLine("2. Sväng höger");
-                Console.WriteLine("3. Köra framåt");
-                Console.WriteLine("4. Backa");
-                Console.WriteLine("5. Rasta");
-                Console.WriteLine("6. Tanka bilen");
-                Console.WriteLine("7. Avsluta");
-                Console.WriteLine("8. Lägg till tiredness");
-                Console.Write("Vad vill du göra härnäst? (ange siffra): ");
+                Console.WriteLine("╔════════════════════════════════════════════╗");
+                Console.WriteLine("║             Tillgängliga kommandon         ║");
+                Console.WriteLine("╠════════════════════════════════════════════╣");
+                Console.WriteLine("║ 1.  Sväng vänster                          ║");
+                Console.WriteLine("║ 2.  Sväng höger                            ║");
+                Console.WriteLine("║ 3.  Köra framåt                            ║");
+                Console.WriteLine("║ 4.  Backa                                  ║");
+                Console.WriteLine("║ 5.  Rasta                                  ║");
+                Console.WriteLine("║ 6.  Tanka bilen                            ║");
+                Console.WriteLine("║ 7.  Avsluta                                ║");
+                Console.WriteLine("╚════════════════════════════════════════════╝");
+                Console.Write("\nVad vill du göra härnäst? (ange siffra): ");
+
                 string command = Console.ReadLine();
 
                 switch (command)
@@ -82,9 +89,7 @@ namespace Bilsimulator
                         break;
                     case "7":
                         return;
-                    case "8":
-                        carService.AddTiredness(driver);
-                        break;
+                 
                     default:
                         Console.WriteLine("Ogiltigt kommando. Försök igen.");
                         break;
@@ -92,12 +97,19 @@ namespace Bilsimulator
 
                 driverService.CheckFatigue(driver);
 
-                Console.WriteLine($"\nFörare: {driver.Name}\n");
-                Console.WriteLine($"Bilens riktning: {car.Direction}");
-                Console.WriteLine($"Bensin: {car.Fuel}/{Car.MaxFuel}");
-                Console.WriteLine($"Förarens trötthet: {driver.Tiredness}/{Driver.MaxTiredness}");
-                Console.WriteLine("Tryck på valfri tangent för att fortsätta...");
+                Console.WriteLine("============================================");
+                Console.WriteLine($" Förare: {driver.Name}");
+                Console.WriteLine("============================================");
+                Console.WriteLine($" Bilens riktning:     {car.Direction}");
+                Console.WriteLine($" Bensin:              {car.Fuel}/{Car.MaxFuel}");
+                Console.WriteLine($" Förarens trötthet:   {driver.Tiredness}/{Driver.MaxTiredness}");
+                Console.WriteLine("============================================");
+                Console.WriteLine(" Tryck på valfri tangent för att fortsätta...");
+                Console.WriteLine("============================================");
+
                 Console.ReadKey();
+                console.Clear();
+
             }
         }
 

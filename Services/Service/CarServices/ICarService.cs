@@ -14,7 +14,6 @@ namespace Services.Service.CarServices
         void DriveForward(Car car, Driver driver);
         void DriveBackward(Car car, Driver driver);
         void Refuel(Car car, Driver driver);
-        void AddTiredness(Driver driver);
     }
 
 }

@@ -26,7 +26,10 @@ namespace Services.Service.DriverServices
                 driver.Tired = false;
             }
 
-            driver.Tiredness++;
+            
+                driver.Tiredness = driver.Tiredness - 2;
+
+            
 
             return driver.Tiredness;
         }
