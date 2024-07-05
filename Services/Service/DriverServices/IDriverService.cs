@@ -9,7 +9,7 @@ namespace Services.Service.DriverServices
 {
     public interface IDriverService
     {
-        void Rest(Driver driver);
+        int SetRest(Driver driver);
         void CheckFatigue(Driver driver);
     }
 }

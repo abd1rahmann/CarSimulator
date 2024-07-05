@@ -10,13 +10,13 @@ public class Car
 {   
     public int Fuel { get; set; } = MaxFuel;
     public const int MaxFuel = 20;
-    public Direction Direction { get; set; } = Direction.North;
+    public Direction Direction { get; set; } = Direction.Norrut;
 }
 
 public enum Direction
 {
-    North,
-    South,
-    West,
-    East
+    Norrut,
+    Söderut,
+    Västerut,
+    Österut
 }

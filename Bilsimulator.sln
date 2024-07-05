@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bilsimulator", "Bilsimulato
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{C6042B6A-8A4C-4C6A-B4BA-E322A129D5DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bilsimulator.Tests", "Bilsimulator.Tests\Bilsimulator.Tests.csproj", "{3187CFF6-EBFB-477D-BB21-ECA80131428E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C6042B6A-8A4C-4C6A-B4BA-E322A129D5DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6042B6A-8A4C-4C6A-B4BA-E322A129D5DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6042B6A-8A4C-4C6A-B4BA-E322A129D5DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3187CFF6-EBFB-477D-BB21-ECA80131428E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3187CFF6-EBFB-477D-BB21-ECA80131428E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3187CFF6-EBFB-477D-BB21-ECA80131428E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3187CFF6-EBFB-477D-BB21-ECA80131428E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
