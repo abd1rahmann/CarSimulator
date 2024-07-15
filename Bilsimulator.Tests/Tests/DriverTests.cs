@@ -88,5 +88,48 @@ namespace Bilsimulator.Tests.Tests
             }
         }
 
+        //************************************************************************************
+
+
+        [TestMethod]
+        public void SetRest_Does_Not_Reset_Tiredness_If_Not_Tired()
+        {
+            var driver = new Driver { Tiredness = 5, Tired = false };
+            var driverService = new DriverService();
+
+            var result = driverService.SetRest(driver);
+
+            Assert.AreEqual(3, result);  // Tiredness should decrease by 2
+            Assert.IsFalse(driver.Tired);
+        }
+
+        [TestMethod]
+        public void CheckFatigue_When_Tiredness_Less_Than_Warning_Does_Not_Set_Tired()
+        {
+            var driver = new Driver { Tiredness = 5 };
+            var driverService = new DriverService();
+
+            using (var sw = new StringWriter())
+            {
+                Console.SetOut(sw);
+                driverService.CheckFatigue(driver);
+
+                var output = sw.ToString().Trim();
+                Assert.IsTrue(string.IsNullOrEmpty(output));  // No warning message should be printed
+                Assert.IsFalse(driver.Tired);
+            }
+        }
+
+        [TestMethod]
+        public void SetRest_Decreases_Tiredness_By_2_When_Not_Tired()
+        {
+            var driver = new Driver { Tiredness = 5, Tired = false };
+            var driverService = new DriverService();
+
+            var result = driverService.SetRest(driver);
+
+            Assert.AreEqual(3, result);
+        }
+
     }
 }
