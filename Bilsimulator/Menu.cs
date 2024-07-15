@@ -1,6 +1,5 @@
 ﻿using Services.Service.CarServices;
 using Services.Service.DriverServices;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 using System.Net.Http;
 using System.Text.Json;
 using Services.Service.ConsoleService;
@@ -29,7 +28,7 @@ namespace Bilsimulator
         public async Task Start()
         {
 
-            var apiUrl = "https://randomuser.me/api/"; // Replace with the actual API URL
+            var apiUrl = "https://randomuser.me/api/";
 
             try
             {
@@ -89,7 +88,7 @@ namespace Bilsimulator
                         break;
                     case "7":
                         return;
-                 
+
                     default:
                         Console.WriteLine("Ogiltigt kommando. Försök igen.");
                         break;

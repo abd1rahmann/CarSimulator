@@ -16,5 +16,6 @@ namespace Bilsimulator
 
             await menu.Start();
         }
+
     }
 }
