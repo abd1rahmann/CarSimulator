@@ -14,17 +14,6 @@ namespace Services.Service.CarServices
 
         public void TurnLeft(Car car, Driver driver)
         {
-            driver.Tiredness++;
-
-            car.Direction = car.Direction switch
-            {
-                Direction.Norrut => Direction.Västerut,
-                Direction.Västerut => Direction.Söderut,
-                Direction.Söderut => Direction.Österut,
-                Direction.Österut => Direction.Norrut,
-                _ => car.Direction
-            };
-
             if (driver.Tiredness >= 10)
             {
                 Console.WriteLine("Föraren är för trött för att köra. Vila först.");
@@ -33,7 +22,17 @@ namespace Services.Service.CarServices
 
             if (car.Fuel > 0)
             {
+                driver.Tiredness++;
                 car.Fuel--;
+
+                car.Direction = car.Direction switch
+                {
+                    Direction.Norrut => Direction.Västerut,
+                    Direction.Västerut => Direction.Söderut,
+                    Direction.Söderut => Direction.Österut,
+                    Direction.Österut => Direction.Norrut,
+                    _ => car.Direction
+                };
             }
             else
             {
@@ -43,17 +42,6 @@ namespace Services.Service.CarServices
 
         public void TurnRight(Car car, Driver driver)
         {
-            driver.Tiredness++;
-
-            car.Direction = car.Direction switch
-            {
-                Direction.Norrut => Direction.Österut,
-                Direction.Österut => Direction.Söderut,
-                Direction.Söderut => Direction.Västerut,
-                Direction.Västerut => Direction.Norrut,
-                _ => car.Direction
-            };
-
             if (driver.Tiredness >= 10)
             {
                 Console.WriteLine("Föraren är för trött för att köra. Vila först.");
@@ -62,7 +50,17 @@ namespace Services.Service.CarServices
 
             if (car.Fuel > 0)
             {
+                driver.Tiredness++;
                 car.Fuel--;
+
+                car.Direction = car.Direction switch
+                {
+                    Direction.Norrut => Direction.Österut,
+                    Direction.Österut => Direction.Söderut,
+                    Direction.Söderut => Direction.Västerut,
+                    Direction.Västerut => Direction.Norrut,
+                    _ => car.Direction
+                };
             }
             else
             {
@@ -72,10 +70,6 @@ namespace Services.Service.CarServices
 
         public void DriveForward(Car car, Driver driver)
         {
-            driver.Tiredness++;
-
-            car.Direction = Direction.Norrut;
-
             if (driver.Tiredness >= 10)
             {
                 Console.WriteLine("Föraren är för trött för att köra. Vila först.");
@@ -84,7 +78,10 @@ namespace Services.Service.CarServices
 
             if (car.Fuel > 0)
             {
+                driver.Tiredness++;
                 car.Fuel--;
+
+                car.Direction = Direction.Norrut;
             }
             else
             {
@@ -94,15 +91,6 @@ namespace Services.Service.CarServices
 
         public void DriveBackward(Car car, Driver driver)
         {
-            driver.Tiredness++;
-
-            car.Direction = car.Direction switch
-            {
-                Direction.Norrut => Direction.Söderut,
-                Direction.Söderut => Direction.Norrut,
-                _ => car.Direction
-            };
-
             if (driver.Tiredness >= 10)
             {
                 Console.WriteLine("Föraren är för trött för att köra. Vila först.");
@@ -111,7 +99,15 @@ namespace Services.Service.CarServices
 
             if (car.Fuel > 0)
             {
+                driver.Tiredness++;
                 car.Fuel--;
+
+                car.Direction = car.Direction switch
+                {
+                    Direction.Norrut => Direction.Söderut,
+                    Direction.Söderut => Direction.Norrut,
+                    _ => car.Direction
+                };
             }
             else
             {

@@ -62,7 +62,7 @@ namespace Bilsimulator
                 Console.WriteLine("║ 6.  Tanka bilen                            ║");
                 Console.WriteLine("║ 7.  Avsluta                                ║");
                 Console.WriteLine("╚════════════════════════════════════════════╝");
-                Console.Write($"\nVad vill du göra härnäst, {driver.Name}? (ange siffra): ");
+                Console.Write($"\nHej, {driver.Name}! Vad vill du göra härnäst? (ange siffra): ");
 
                 string command = Console.ReadLine();
 
