@@ -158,7 +158,7 @@ namespace Bilsimulator.Tests
                 carService.TurnRight(car, driver);
 
                 var expectedOutput = "Bensinen är slut. Du måste tanka bilen innan du kan köra vidare!";
-                Assert.AreEqual(Direction.Österut, car.Direction);
+                Assert.AreEqual(Direction.Norrut, car.Direction);
                 Assert.AreEqual(0, car.Fuel);
                 Assert.AreEqual(expectedOutput, sw.ToString().Trim());
             }
@@ -184,8 +184,8 @@ namespace Bilsimulator.Tests
             }
         }
 
-        [TestMethod]
 
+        [TestMethod]
         public void DriveBackward_No_Fuel()
         {
             var mockDriverService = new Mock<IDriverService>();
@@ -199,11 +199,13 @@ namespace Bilsimulator.Tests
                 carService.DriveBackward(car, driver);
 
                 var expectedOutput = "Bensinen är slut. Du måste tanka bilen innan du kan köra vidare!";
-                Assert.AreEqual(Direction.Söderut, car.Direction);
+                Assert.AreEqual(Direction.Norrut, car.Direction);  
                 Assert.AreEqual(0, car.Fuel);
                 Assert.AreEqual(expectedOutput, sw.ToString().Trim());
             }
         }
+
+
 
         [TestMethod]
         public void Refuel_Increases_Tiredness()
