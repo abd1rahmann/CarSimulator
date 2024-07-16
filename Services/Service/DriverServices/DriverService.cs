@@ -1,17 +1,15 @@
 ﻿using Services.Service.CarServices;
 
-
 namespace Services.Service.DriverServices
 {
     public class DriverService : IDriverService
     {
+        private const int MaxTiredness = 10;
 
         public int SetRest(Driver driver)
         {
             if (driver.Tired)
             {
-
-                //Console.Clear();
                 string redo = "";
 
                 while (redo.ToLower() != "j")
@@ -20,23 +18,29 @@ namespace Services.Service.DriverServices
                     redo = Console.ReadLine().ToLower();
                 }
 
-
-
                 driver.Tiredness = 0;
                 driver.Tired = false;
             }
-
-            
-                driver.Tiredness = driver.Tiredness - 2;
-
-            
+            else
+            {
+                driver.Tiredness -= 2;
+                if (driver.Tiredness < 0)
+                {
+                    driver.Tiredness = 0;
+                }
+            }
 
             return driver.Tiredness;
         }
 
         public void CheckFatigue(Driver driver)
         {
-            if (Driver.MaxTiredness <=  driver.Tiredness)
+            if (driver.Tiredness > MaxTiredness)
+            {
+                driver.Tiredness = MaxTiredness;
+            }
+
+            if (driver.Tiredness >= Driver.MaxTiredness)
             {
                 Console.WriteLine("\nFöraren är extremt trött. Det är farligt att köra. Ta en lång rast!\n");
                 driver.Tired = true;

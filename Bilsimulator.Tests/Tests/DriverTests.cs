@@ -88,7 +88,6 @@ namespace Bilsimulator.Tests.Tests
             }
         }
 
-        //************************************************************************************
 
 
         [TestMethod]
@@ -99,7 +98,7 @@ namespace Bilsimulator.Tests.Tests
 
             var result = driverService.SetRest(driver);
 
-            Assert.AreEqual(3, result);  // Tiredness should decrease by 2
+            Assert.AreEqual(3, result);  
             Assert.IsFalse(driver.Tired);
         }
 
@@ -115,7 +114,7 @@ namespace Bilsimulator.Tests.Tests
                 driverService.CheckFatigue(driver);
 
                 var output = sw.ToString().Trim();
-                Assert.IsTrue(string.IsNullOrEmpty(output));  // No warning message should be printed
+                Assert.IsTrue(string.IsNullOrEmpty(output));  
                 Assert.IsFalse(driver.Tired);
             }
         }
