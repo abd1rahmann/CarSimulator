@@ -122,7 +122,6 @@ namespace Bilsimulator.Tests
         }
 
 
-        //************************************************************************************
 
 
 
@@ -275,7 +274,7 @@ namespace Bilsimulator.Tests
 
             carService.DriveForward(car, driver);
 
-            Assert.AreEqual(Direction.Norrut, car.Direction);  // Default to Norrut as per method implementation
+            Assert.AreEqual(Direction.Norrut, car.Direction);  
             Assert.AreEqual(9, car.Fuel);
             Assert.AreEqual(1, driver.Tiredness);
         }

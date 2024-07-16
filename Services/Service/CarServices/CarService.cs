@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Services.Service.DriverServices;
 
 namespace Services.Service.CarServices
@@ -28,16 +24,21 @@ namespace Services.Service.CarServices
                 Direction.Österut => Direction.Norrut,
                 _ => car.Direction
             };
+
+            if (driver.Tiredness >= 10)
+            {
+                Console.WriteLine("Föraren är för trött för att köra. Vila först.");
+                return;
+            }
+
             if (car.Fuel > 0)
             {
                 car.Fuel--;
-
             }
             else
             {
                 Console.WriteLine("Bensinen är slut. Du måste tanka bilen innan du kan köra vidare!");
             }
-
         }
 
         public void TurnRight(Car car, Driver driver)
@@ -52,6 +53,13 @@ namespace Services.Service.CarServices
                 Direction.Västerut => Direction.Norrut,
                 _ => car.Direction
             };
+
+            if (driver.Tiredness >= 10)
+            {
+                Console.WriteLine("Föraren är för trött för att köra. Vila först.");
+                return;
+            }
+
             if (car.Fuel > 0)
             {
                 car.Fuel--;
@@ -67,7 +75,12 @@ namespace Services.Service.CarServices
             driver.Tiredness++;
 
             car.Direction = Direction.Norrut;
-            
+
+            if (driver.Tiredness >= 10)
+            {
+                Console.WriteLine("Föraren är för trött för att köra. Vila först.");
+                return;
+            }
 
             if (car.Fuel > 0)
             {
@@ -77,7 +90,6 @@ namespace Services.Service.CarServices
             {
                 Console.WriteLine("Bensinen är slut. Du måste tanka bilen innan du kan köra vidare!");
             }
-
         }
 
         public void DriveBackward(Car car, Driver driver)
@@ -88,21 +100,23 @@ namespace Services.Service.CarServices
             {
                 Direction.Norrut => Direction.Söderut,
                 Direction.Söderut => Direction.Norrut,
-               
                 _ => car.Direction
             };
 
+            if (driver.Tiredness >= 10)
+            {
+                Console.WriteLine("Föraren är för trött för att köra. Vila först.");
+                return;
+            }
 
             if (car.Fuel > 0)
             {
                 car.Fuel--;
-
             }
             else
             {
                 Console.WriteLine("Bensinen är slut. Du måste tanka bilen innan du kan köra vidare!");
             }
-
         }
 
         public void Refuel(Car car, Driver driver)
@@ -110,8 +124,5 @@ namespace Services.Service.CarServices
             car.Fuel = Car.MaxFuel;
             driver.Tiredness++;
         }
-
-      
     }
-
 }
