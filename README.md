@@ -39,8 +39,26 @@ This project is an object-oriented C# console application that simulates a car d
 
 ## 📦 Project Structure
 
-<pre> ```plaintext CarSimulator/ │ ├── Bilsimulator/ # Console application │ ├── Program.cs │ ├── Menu.cs │ ├── Car.cs │ └── Driver.cs │ ├── Services/ # Logic services library │ ├── CarServices/ │ │ ├── ICarService.cs │ │ └── CarService.cs │ └── DriverServices/ │ ├── IDriverService.cs │ └── DriverService.cs │ ├── Bilsimulator.Tests/ # MSTest project │ ├── MenuTests.cs │ ├── CarServiceTests.cs │ └── DriverServiceTests.cs ``` </pre>
-
+CarSimulator/
+│
+├── Bilsimulator/ # Console application
+│ ├── Program.cs
+│ ├── Menu.cs
+│ ├── Car.cs
+│ └── Driver.cs
+│
+├── Services/ # Logic services library
+│ ├── CarServices/
+│ │ ├── ICarService.cs
+│ │ └── CarService.cs
+│ └── DriverServices/
+│ ├── IDriverService.cs
+│ └── DriverService.cs
+│
+├── Bilsimulator.Tests/ # MSTest project
+│ ├── MenuTests.cs
+│ ├── CarServiceTests.cs
+│ └── DriverServiceTests.cs
 
 ---
 
