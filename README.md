@@ -60,9 +60,6 @@ CarSimulator/
 │ ├── CarServiceTests.cs
 │ └── DriverServiceTests.cs
 
-yaml
-Kopiera
-
 ---
 
 ## ✅ Unit Testing
